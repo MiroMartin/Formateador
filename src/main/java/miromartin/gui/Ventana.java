@@ -32,19 +32,6 @@ public class Ventana extends JFrame implements ActionListener{
         button.setBounds(30, 30, 150, 30);
         add(button);
         button.addActionListener(this);
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setDialogTitle("Elija el video");
-
-                int userSelection = fileChooser.showOpenDialog(button);
-                if (userSelection == JFileChooser.APPROVE_OPTION) {
-                    File selectedFile = fileChooser.getSelectedFile();
-                    System.out.println("Video seleccionado: " + selectedFile.getAbsolutePath());
-                }
-            }
-        });
 
         button2 = new JButton("formato elegido");
         button2.setBounds(30, 110, 150, 30);
@@ -56,6 +43,14 @@ public class Ventana extends JFrame implements ActionListener{
         add(button3);
         button3.addActionListener(this);
 
+        txt1 = new JTextField();
+        txt1.setBounds(30, 65, 150, 30);
+        add(txt1);
+
+        txt2 = new JTextField();
+        txt2.setBounds(30, 145,150, 30);
+        add(txt2);
+
     }
     public String elegirVideo(){
         JFileChooser fileChooser = new JFileChooser();
@@ -65,27 +60,40 @@ public class Ventana extends JFrame implements ActionListener{
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             System.out.println("Video seleccionado: " + selectedFile.getAbsolutePath());
-            String vp = selectedFile.toString();
-            return vp;
+            return selectedFile.toString();
         }
         return null;
     }
 
     public String elegirFormato(){
-        String format = JOptionPane.showInputDialog("Ingrese el fomato deseado");
+        String format = JOptionPane.showInputDialog("Ingrese el nuevo nombre del video con el formato deseado");
+        System.out.println("Nuevo nombre y formato seleccionado");
         return format;
     }
 
-    public void formatearVideo(String vp, String format){
-        System.out.println("cd && cd video && ffmpeg -i " + vp + format);
+
+    public void formatearVideo(){
+
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder("ffmpeg", "-i", txt1.getText(), txt2.getText());
+            processBuilder.directory(new File("/home/miromartin/video"));
+            Process process = processBuilder.start();
+
+            process.waitFor();
+            System.out.println("Comando ejecutado exitosamente");
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
     @Override
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == button){
-            elegirVideo();
+            txt1.setText(elegirVideo());
         }else if (e.getSource()== button2){
-            elegirFormato();
+            txt2.setText(elegirFormato());
         }else if (e.getSource()== button3){
             formatearVideo();
         }
