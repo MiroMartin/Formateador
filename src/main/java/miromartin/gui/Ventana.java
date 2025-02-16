@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Ventana extends JFrame implements ActionListener{
 
@@ -76,7 +78,10 @@ public class Ventana extends JFrame implements ActionListener{
 
         try {
             ProcessBuilder processBuilder = new ProcessBuilder("ffmpeg", "-i", txt1.getText(), txt2.getText());
-            processBuilder.directory(new File("/home/miromartin/video"));
+            Path path = Paths.get(txt1.getText());
+            String directorio = path.getParent().toString();
+            System.out.println(directorio);
+            processBuilder.directory(new File(directorio));
             Process process = processBuilder.start();
 
             process.waitFor();
