@@ -30,6 +30,7 @@ public class Ventana extends JFrame implements ActionListener{
 
     public void addComponent() {
 
+        estilo();
         button = new JButton("Elija el video");
         button.setBounds(30, 30, 150, 30);
         add(button);
@@ -53,6 +54,14 @@ public class Ventana extends JFrame implements ActionListener{
         txt2.setBounds(30, 145,150, 30);
         add(txt2);
 
+    }
+
+    public void estilo(){
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
     public String elegirVideo(){
         JFileChooser fileChooser = new JFileChooser();
