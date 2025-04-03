@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 
 public class Ventana extends JFrame implements ActionListener{
 
+
     JButton button;
     JButton button2;
     JButton button3;
@@ -30,7 +31,6 @@ public class Ventana extends JFrame implements ActionListener{
 
     public void addComponent() {
 
-        estilo();
         button = new JButton("Elija el video");
         button.setBounds(30, 30, 150, 30);
         add(button);
@@ -56,13 +56,6 @@ public class Ventana extends JFrame implements ActionListener{
 
     }
 
-    public void estilo(){
-        try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
     public String elegirVideo(){
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Elija el video");
